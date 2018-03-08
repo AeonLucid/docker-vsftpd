@@ -10,7 +10,8 @@ RUN yum -y install httpd && yum clean all
 RUN yum install -y \
 	vsftpd \
 	db4-utils \
-	db4
+	db4 \
+	iproute && yum clean all
 
 ENV FTP_USER **String**
 ENV FTP_PASS **Random**
