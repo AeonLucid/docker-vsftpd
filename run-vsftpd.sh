@@ -45,6 +45,8 @@ cat << EOB
 
 	SERVER SETTINGS
 	---------------
+	- Passive address: $PASV_ADDRESS
+	- Passive port range: $PASV_MIN_PORT - $PASV_MAX_PORT
 	· FTP User: $FTP_USER
 	· FTP Password: $FTP_PASS
 	· Log file: $LOG_FILE
