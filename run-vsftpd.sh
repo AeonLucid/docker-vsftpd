@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export PASV_MIN_PORT=21100
+export PASV_MAX_PORT=21110
+
 # If no env var for FTP_USER has been specified, use 'admin':
 if [ "$FTP_USER" = "**String**" ]; then
     export FTP_USER='admin'
