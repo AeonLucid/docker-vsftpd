@@ -1,13 +1,5 @@
 #!/bin/bash
 
-export PASV_MIN_PORT=21100
-export PASV_MAX_PORT=21110
-
-# If no env var for FTP_USER has been specified, use 'admin':
-if [ "$FTP_USER" = "**String**" ]; then
-    export FTP_USER='admin'
-fi
-
 # If no env var has been specified, generate a random password for FTP_USER:
 if [ "$FTP_PASS" = "**Random**" ]; then
     export FTP_PASS=`cat /dev/urandom | tr -dc A-Z-a-z-0-9 | head -c${1:-16}`
@@ -30,6 +22,8 @@ if [ "$PASV_ADDRESS" = "**IPv4**" ]; then
     export PASV_ADDRESS=$(/sbin/ip route|awk '/default/ { print $3 }')
 fi
 
+echo "ftp_data_port=${FTP_PORT_DATA}" >> /etc/vsftpd/vsftpd.conf
+echo "listen_port=${FTP_PORT}" >> /etc/vsftpd/vsftpd.conf
 echo "pasv_address=${PASV_ADDRESS}" >> /etc/vsftpd/vsftpd.conf
 echo "pasv_max_port=${PASV_MAX_PORT}" >> /etc/vsftpd/vsftpd.conf
 echo "pasv_min_port=${PASV_MIN_PORT}" >> /etc/vsftpd/vsftpd.conf
