@@ -19,12 +19,17 @@ ENV PASV_ADDRESS **IPv4**
 ENV PASV_MIN_PORT 21100
 ENV PASV_MAX_PORT 21110
 ENV LOG_STDOUT **Boolean**
+ENV USER_ID 0
+ENV GROUP_ID 0
+ENV UMASK 0000
 
 COPY vsftpd.conf /etc/vsftpd/
 COPY vsftpd_virtual /etc/pam.d/
 COPY run-vsftpd.sh /usr/sbin/
+COPY runas.sh /usr/sbin/
 
 RUN chmod +x /usr/sbin/run-vsftpd.sh
+RUN chmod +x /usr/sbin/runas.sh
 RUN mkdir -p /home/vsftpd/
 RUN chown -R ftp:ftp /home/vsftpd/
 
@@ -33,4 +38,4 @@ VOLUME /var/log/vsftpd
 
 EXPOSE 20 21
 
-CMD ["/usr/sbin/run-vsftpd.sh"]
+CMD /usr/sbin/runas.sh $USER_ID $GROUP_ID $UMASK /usr/sbin/run-vsftpd.sh
